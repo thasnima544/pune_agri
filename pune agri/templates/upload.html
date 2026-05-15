@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Upload Farmer Data</title>
+
+    <link rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<div class="upload-container">
+
+    <h1>Farmer Data Upload</h1>
+
+    <form id="uploadForm" enctype="multipart/form-data">
+
+        <input type="text" name="name" placeholder="Farmer Name" required>
+
+        <input type="text" name="district" placeholder="District" required>
+
+        <input type="text" name="crop" placeholder="Crop Type" required>
+
+        <input type="number" name="moisture" placeholder="Soil Moisture">
+
+        <input type="number" name="npk" placeholder="NPK Value">
+
+        <input type="text" name="latitude" placeholder="Latitude">
+
+        <input type="text" name="longitude" placeholder="Longitude">
+
+        <input type="file" name="image">
+
+        <button type="submit">
+            SUBMIT
+        </button>
+
+    </form>
+
+    <div id="status"></div>
+
+</div>
+
+<script>
+
+const form = document.getElementById('uploadForm');
+
+form.addEventListener('submit', async (e)=>{
+
+    e.preventDefault();
+
+    const data = new FormData(form);
+
+    const response = await fetch('/submit_farmer', {
+        method: 'POST',
+        body: data
+    });
+
+    const result = await response.json();
+
+    document.getElementById('status').innerHTML = 'Upload Successful';
+
+    form.reset();
+});
+
+</script>
+
+</body>
+</html>
